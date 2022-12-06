@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 import chalk from "chalk";
 import { promises } from "fs";
 import { setTimeout } from "timers/promises";
