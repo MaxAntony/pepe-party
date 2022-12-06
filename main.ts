@@ -4,7 +4,6 @@ import chalk from "chalk";
 import { promises } from "fs";
 import { dirname } from "path";
 import { fileURLToPath } from "url";
-import { setTimeout } from "timers/promises";
 
 const { readdir, readFile } = promises;
 const { log, clear } = console;
@@ -68,17 +67,14 @@ async function main() {
   const frames: string[] = await getFiles(framesPath);
   const colorFrames: FrameColor[] = await frameColorsLoader(entitiesPath);
 
-  clear();
-
-  while (true) {
+  setInterval(() => {
+    clear();
     renderFrame(frames[frameIndex], colorFrames[frameIndex]);
     frameIndex++;
     if (frameIndex >= frames.length) {
       frameIndex = 0;
     }
-    await setTimeout(100);
-    clear();
-  }
+  }, 100);
 }
 
 process.on("SIGINT", () => {
