@@ -3,27 +3,30 @@
 import chalk from "chalk";
 import { promises } from "fs";
 import { dirname } from "path";
-import { setTimeout } from "timers/promises";
 import { fileURLToPath } from "url";
+import { setTimeout } from "timers/promises";
 
 const { readdir, readFile } = promises;
 const { log, clear } = console;
 
-interface RangeColor {
+interface LineColor {
   start: number;
   end: number;
   color: number;
 }
+
+type FrameColor = LineColor[];
+
 const __filename = fileURLToPath(import.meta.url);
 const resourcesPath = dirname(__filename) + "/resources";
 const framesPath = `${resourcesPath}/frames`;
-const entitiesPath = `${resourcesPath}/entities`;
+const entitiesPath = `${resourcesPath}/frame-colors`;
 
-async function entityLoader(path: string): Promise<RangeColor[][]> {
+async function frameColorsLoader(path: string): Promise<FrameColor[]> {
   const entities = await getFiles(path);
-  const colorFrames: RangeColor[][] = [];
+  const colorFrames: FrameColor[] = [];
   for (const entity of entities) {
-    const frameColor: RangeColor[] = [];
+    const frameColor: FrameColor = [];
     const lines = entity.split("\n");
     for (const line of lines) {
       const range = line.split("-");
@@ -42,22 +45,20 @@ async function getFiles(path: string) {
   const files = await readdir(path);
   const collator = new Intl.Collator([], { numeric: true });
   files.sort((a, b) => collator.compare(a, b));
-  let frames: string[] = [];
   const framePromises: Promise<string>[] = [];
   for (const file of files) {
     framePromises.push(readFile(`${path}/${file}`, "utf-8"));
   }
-  frames = await Promise.all(framePromises);
-  return frames;
+  return Promise.all(framePromises);
 }
 
-async function render(frame: string, entity: RangeColor[]) {
-  for (const range of entity) {
-    const color = chalk.ansi256(range.color);
-    const partColored = frame.slice(range.start, range.end);
-    const start = frame.slice(0, range.start);
-    const end = frame.slice(range.end);
-    frame = start + color(partColored) + end;
+function renderFrame(frame: string, frameColor: FrameColor): void {
+  for (const sectionColor of frameColor) {
+    const colorize = chalk.ansi256(sectionColor.color);
+    const sectionFrame = frame.slice(sectionColor.start, sectionColor.end);
+    const start = frame.slice(0, sectionColor.start);
+    const end = frame.slice(sectionColor.end);
+    frame = start + colorize(sectionFrame) + end;
   }
   log(frame);
 }
@@ -65,11 +66,12 @@ async function render(frame: string, entity: RangeColor[]) {
 async function main() {
   let frameIndex = 0;
   const frames: string[] = await getFiles(framesPath);
-  const entities: RangeColor[][] = await entityLoader(entitiesPath);
+  const colorFrames: FrameColor[] = await frameColorsLoader(entitiesPath);
 
   clear();
+
   while (true) {
-    await render(frames[frameIndex], entities[frameIndex]);
+    renderFrame(frames[frameIndex], colorFrames[frameIndex]);
     frameIndex++;
     if (frameIndex >= frames.length) {
       frameIndex = 0;
