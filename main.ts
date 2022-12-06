@@ -2,8 +2,9 @@
 
 import chalk from "chalk";
 import { promises } from "fs";
-import { resolve } from "path";
+import { dirname } from "path";
 import { setTimeout } from "timers/promises";
+import { fileURLToPath } from "url";
 
 const { readdir, readFile } = promises;
 const { log, clear } = console;
@@ -13,8 +14,8 @@ interface RangeColor {
   end: number;
   color: number;
 }
-
-const resourcesPath = resolve() + "/resources";
+const __filename = fileURLToPath(import.meta.url);
+const resourcesPath = dirname(__filename) + "/resources";
 const framesPath = `${resourcesPath}/frames`;
 const entitiesPath = `${resourcesPath}/entities`;
 
