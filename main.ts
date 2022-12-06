@@ -2,6 +2,7 @@
 
 import chalk from "chalk";
 import { promises } from "fs";
+import { resolve } from "path";
 import { setTimeout } from "timers/promises";
 
 const { readdir, readFile } = promises;
@@ -13,7 +14,7 @@ interface RangeColor {
   color: number;
 }
 
-const resourcesPath = "./resources";
+const resourcesPath = resolve() + "/resources";
 const framesPath = `${resourcesPath}/frames`;
 const entitiesPath = `${resourcesPath}/entities`;
 
