@@ -1,10 +1,10 @@
 {
   "name": "pepe-party",
   "author": "Max Antony",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Invite Pepe to throw a party in your terminal!",
   "bin": {
-    "pepe-party": "dist/index.js"
+    "pepe-party": "./dist/index.js"
   },
   "main": "dist/index.js",
   "type": "module",
