@@ -1,7 +1,7 @@
 {
   "name": "pepe-party",
   "author": "Max Antony",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "Invite Pepe to throw a party in your terminal!",
   "bin": {
     "pepe-party": "./dist/main.js"
