@@ -79,4 +79,9 @@ async function main() {
   }
 }
 
+process.on("SIGINT", () => {
+  console.clear();
+  process.exit();
+});
+
 main();
