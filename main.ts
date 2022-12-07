@@ -19,7 +19,7 @@ type FrameColor = LineColor[];
 const __filename = fileURLToPath(import.meta.url);
 const resourcesPath = dirname(__filename) + "/resources";
 const framesPath = `${resourcesPath}/frames`;
-const entitiesPath = `${resourcesPath}/frame-colors`;
+const frameColorsPath = `${resourcesPath}/frame-colors`;
 
 async function frameColorsLoader(path: string): Promise<FrameColor[]> {
   const entities = await getFiles(path);
@@ -65,7 +65,7 @@ function renderFrame(frame: string, frameColor: FrameColor): void {
 async function main() {
   let frameIndex = 0;
   const frames: string[] = await getFiles(framesPath);
-  const colorFrames: FrameColor[] = await frameColorsLoader(entitiesPath);
+  const colorFrames: FrameColor[] = await frameColorsLoader(frameColorsPath);
 
   setInterval(() => {
     clear();
