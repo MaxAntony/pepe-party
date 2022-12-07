@@ -44,7 +44,7 @@ Puedes salir en cualquier momento presionando `Ctrl+C`.
 
 ## Autor
 
-esta version en typescript de `Pepe Party` es desarrollada por [Max Antony](https://maxantony.com)
+esta version en typescript de `Pepe Party` es desarrollada por [Max Antony](https://maxantony.com), puedes seguirme en mi [canal de YT](https://www.youtube.com/@dot-max) donde subire videotutoriales sobre node, linux y demas
 
 ## Reconocimiento
 
