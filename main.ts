@@ -1,11 +1,10 @@
 #!/usr/bin/env node
 
 import chalk from "chalk";
-import { promises } from "fs";
+import { readdir, readFile } from "fs/promises";
 import { dirname } from "path";
 import { fileURLToPath } from "url";
 
-const { readdir, readFile } = promises;
 const { log, clear } = console;
 
 interface LineColor {

@@ -13,7 +13,7 @@
   ],
   "scripts": {
     "clean": "rm -rf ./dist",
-    "build": "npm run clean && mkdir dist && tsc && cp -r resources dist/"
+    "build": "npm run clean && mkdir dist && tsc && cp -r resources dist/ && chmod +x ./dist/main.js"
   },
   "repository": {
     "type": "git",
